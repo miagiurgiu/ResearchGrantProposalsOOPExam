@@ -1,9 +1,5 @@
 # ResearchGrantProposalsOOPExam
 
-Here is the exact text transcribed from the image, ensuring that the numbering for the first item starts with **1**:
-
----
-
 ## Research grant proposals
 
 Write an application which simulates proposing research grants by a research team, as follows:
