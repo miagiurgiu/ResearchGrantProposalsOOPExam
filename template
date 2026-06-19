@@ -1,0 +1,96 @@
+model.h
+class MyModel : public QAbstractTableModel {
+private:
+    std::vector<Entity> elems;
+
+public:
+    MyModel(const std::vector<Entity>& elems,
+            QObject* parent = nullptr);
+
+    int rowCount(const QModelIndex& parent = QModelIndex{}) const override;
+
+    int columnCount(const QModelIndex& parent = QModelIndex{}) const override;
+
+    QVariant data(const QModelIndex& index,
+                  int role = Qt::DisplayRole) const override;
+
+    QVariant headerData(int section,
+                        Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
+
+    void updateData(const std::vector<Entity>& newElems);
+};
+------------------
+model.cpp
+
+MyModel::MyModel(const std::vector<Entity>& elems,
+                 QObject* parent)
+    : QAbstractTableModel{parent},
+      elems{elems}
+{
+}
+
+
+int MyModel::rowCount(const QModelIndex&) const {
+    return elems.size();
+}
+
+int MyModel::columnCount(const QModelIndex&) const {
+    return NR_COLUMNS;
+}
+
+QVariant MyModel::data(const QModelIndex& index,
+                       int role) const {
+
+    if (!index.isValid() ||
+        role != Qt::DisplayRole)
+        return QVariant{};
+
+    const Entity& e = elems[index.row()];
+
+    if (index.column() == 0)
+        return ...;
+
+    if (index.column() == 1)
+        return ...;
+
+    if (index.column() == 2)
+        return ...;
+
+    return QVariant{};
+}
+
+QVariant MyModel::headerData(int section,
+                             Qt::Orientation orientation,
+                             int role) const {
+
+    if (role != Qt::DisplayRole)
+        return QVariant{};
+
+    if (orientation == Qt::Horizontal) {
+
+        if (section == 0) return "Col1";
+        if (section == 1) return "Col2";
+        if (section == 2) return "Col3";
+    }
+
+    return QVariant{};
+}
+
+void MyModel::updateData(const std::vector<Entity>& newElems) {
+    beginResetModel();
+    elems = newElems;
+    endResetModel();
+}
+
+----------
+gui
+
+QTableView* tableView = new QTableView{};
+
+MyModel* model =
+    new MyModel{service.getAll(), tableView};
+
+tableView->setModel(model);
+
+tableView->show();
