@@ -32,7 +32,7 @@ void GUI::connectSignalsAndSlots() {
 void GUI::populateList() {
     update();
 }
-#yes
+//yes
 void GUI::addIdea() {
     std::string title=ui->titleLineEdit->text().toStdString();
     std::string description=ui->descriptionLineEdit->text().toStdString();
