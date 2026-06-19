@@ -6,7 +6,7 @@
 #define RESEARCHGRANTPROPOSALSOOPEXAM_GUI_H
 
 #include <QWidget>
-
+#include "IdeasModel.h"
 #include "service/service.h"
 
 
@@ -21,12 +21,16 @@ public:
     explicit GUI(Service& service,const Researcher& researcher,QWidget *parent = nullptr);
     ~GUI() override;
 
+
 private:
     Ui::GUI *ui;
     Service& service;
     Researcher researcher;
+    IdeasModel* model;
     void connectSignalsAndSlots();
     void populateList();
+    void addIdea();
+    void update();
 };
 
 

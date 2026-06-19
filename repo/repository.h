@@ -21,6 +21,7 @@ public:
     void loadIdeas();
     void loadResearchers();
     void save();
+    void addIdea(const Idea& idea);
 };
 
 

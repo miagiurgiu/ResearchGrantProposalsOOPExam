@@ -31,3 +31,7 @@ int Idea::getDuration() const {
 std::string Idea::toString() const {
     return title+","+description+","+status+","+creator+","+std::to_string(duration);
 }
+
+std::string Idea::toStringNoDescription() const {
+    return title+","+status+","+creator+","+std::to_string(duration);
+}

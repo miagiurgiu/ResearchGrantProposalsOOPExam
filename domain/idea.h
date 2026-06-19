@@ -22,6 +22,7 @@ public:
     std::string getCreator() const;
     int getDuration() const;
     std::string toString() const;
+    std::string toStringNoDescription() const;
 };
 
 

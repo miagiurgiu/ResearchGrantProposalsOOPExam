@@ -16,6 +16,8 @@ public:
     Service(Repository& repo);
     std::vector<Idea> getIdeas() const;
     std::vector<Researcher> getResearchers() const;
+    std::vector<Idea> getSortedIdeas() const;
+    void addIdea(const std::string& title,const std::string& description,const std::string& status,const std::string& creator, int duration);
 };
 
 

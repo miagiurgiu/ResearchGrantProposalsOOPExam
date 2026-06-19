@@ -68,3 +68,8 @@ void Repository::save() {
     }
     fout.close();
 }
+
+void Repository::addIdea(const Idea &idea) {
+    ideas.push_back(idea);
+    //TODO custom model
+}
