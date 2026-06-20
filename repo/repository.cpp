@@ -19,6 +19,10 @@ std::vector<Researcher> Repository::getResearchers() const {
     return researchers;
 }
 
+std::vector<Idea> Repository::getAcceptedIdeas() const {
+    return acceptedIdeas;
+}
+
 void Repository::loadIdeas() {
     std::ifstream fin(ideasFile);
     if (!fin.is_open())
@@ -85,4 +89,22 @@ void Repository::acceptIdea(const std::string &title) {
         }
     }
     throw std::runtime_error("idea not found");
+}
+
+void Repository::saveToFile(const std::string &filename) {
+    std::ofstream fout(filename);
+    if (!fout.is_open())
+        throw std::runtime_error("error");
+    std::vector<Idea> accepted;
+    for (const auto& i:ideas) {
+        if (i.getStatus()=="accepted")
+            accepted.push_back(i);
+    }
+    std::sort(accepted.begin(),accepted.end(),[](const Idea& a,const Idea& b) {
+        return a.getDuration()<b.getDuration();
+    });
+    for (const auto& i:accepted) {
+        fout<<i.toStringBrackets()<<"\n";
+    }
+    fout.close();
 }

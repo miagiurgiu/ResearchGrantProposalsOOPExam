@@ -36,6 +36,10 @@ std::string Idea::toStringNoDescription() const {
     return title+","+status+","+creator+","+std::to_string(duration);
 }
 
+std::string Idea::toStringBrackets() const {
+    return title+",("+creator+"),"+std::to_string(duration)+","+description; // why "their creators (in brackets)? can have more creators??"
+}
+
 void Idea::setStatus(const std::string &newStatus) {
     this->status=newStatus;
 }

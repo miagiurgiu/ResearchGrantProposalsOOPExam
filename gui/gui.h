@@ -31,6 +31,9 @@ private:
     void populateList();
     void addIdea();
     void acceptIdea();
+    void developIdea();
+    void updateDevelopButton();
+    void saveAllAcceptedIdeas();
 };
 
 

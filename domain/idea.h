@@ -23,6 +23,7 @@ public:
     int getDuration() const;
     std::string toString() const;
     std::string toStringNoDescription() const;
+    std::string toStringBrackets() const;
     void setStatus(const std::string& newStatus);
 };
 

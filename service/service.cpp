@@ -23,8 +23,12 @@ std::vector<Idea> Service::getSortedIdeas() const {
     return ideas;
 }
 
+std::vector<Idea> Service::getAcceptedIdeas() const {
+    return repo.getAcceptedIdeas();
+}
+
 void Service::addIdea(const std::string &title, const std::string &description, const std::string &status,
-    const std::string &creator, int duration) {
+                      const std::string &creator, int duration) {
     if (title.empty())
         throw std::runtime_error("title is empty");
     if (duration!=1 && duration !=2 && duration !=3)
@@ -38,4 +42,8 @@ void Service::acceptIdea(const std::string &title, const Researcher &researcher)
         throw std::runtime_error("only seniors can revise and accept");
     repo.acceptIdea(title);
     notify(); //OBSERVER
+}
+
+void Service::saveToFile(const std::string &filename) {
+    repo.saveToFile(filename);
 }

@@ -20,6 +20,9 @@ GUI::GUI(Service& service,const Researcher& researcher,QWidget *parent) :
     // MODEL
     model=new IdeasModel{service.getSortedIdeas(),this};
     ui->ideasTableView->setModel(model);
+    ui->developButton->setEnabled(false); // DISABLED BUTTON
+    ui->saveAllButton->setEnabled(researcher.getPosition()=="senior");
+    updateDevelopButton();
     connectSignalsAndSlots();
 }
 
@@ -31,6 +34,8 @@ GUI::~GUI() {
 void GUI::connectSignalsAndSlots() {
     connect(ui->addButton,&QPushButton::clicked,this,&GUI::addIdea);
     connect(ui->acceptButton,&QPushButton::clicked,this,&GUI::acceptIdea);
+    connect(ui->developButton,&QPushButton::clicked,this,&GUI::developIdea);
+    connect(ui->saveAllButton,&QPushButton::clicked,this,&GUI::saveAllAcceptedIdeas);
 }
 
 void GUI::populateList() {
@@ -44,6 +49,7 @@ void GUI::addIdea() {
     try {
         service.addIdea(title,description,"proposed",researcher.getName(),duration);
         update();
+        updateDevelopButton();
         ui->titleLineEdit->clear();
         ui->descriptionLineEdit->clear();
         ui->durationLineEdit->clear();
@@ -67,6 +73,32 @@ void GUI::acceptIdea() {
     try {
         service.acceptIdea(selectedIdea.getTitle(),researcher);
         update();
+        updateDevelopButton();
+    }
+    catch (const std::exception& e) {
+        QMessageBox::critical(this,"ERROR",e.what());
+    }
+}
+
+void GUI::developIdea() {
+
+}
+
+void GUI::updateDevelopButton() {
+    bool found=false;
+    auto ideas=service.getIdeas();
+    for (const auto& i:ideas) {
+        if (i.getStatus()=="accepted" && i.getCreator()==researcher.getName()) {
+            found=true;
+            break;
+        }
+    }
+    ui->developButton->setEnabled(found);
+}
+
+void GUI::saveAllAcceptedIdeas() {
+    try {
+        service.saveToFile("accepted.txt");
     }
     catch (const std::exception& e) {
         QMessageBox::critical(this,"ERROR",e.what());
