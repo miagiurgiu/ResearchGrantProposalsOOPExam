@@ -71,5 +71,18 @@ void Repository::save() {
 
 void Repository::addIdea(const Idea &idea) {
     ideas.push_back(idea);
-    //TODO custom model
+    save();
+}
+
+void Repository::acceptIdea(const std::string &title) {
+    for (auto& i:ideas) {
+        if (i.getTitle()==title) {
+            if (i.getStatus()!="proposed")
+                throw std::runtime_error("idea is not proposed");
+            i.setStatus("accepted");
+            save();
+            return;
+        }
+    }
+    throw std::runtime_error("idea not found");
 }

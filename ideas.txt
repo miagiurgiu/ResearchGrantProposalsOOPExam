@@ -1,5 +1,5 @@
-robotic cardiology,very interesting medical research idea,proposed,JOJO,3
+robotic cardiology,very interesting medical research idea,accepted,JOJO,3
 robotic meteorology,very interesting meteorological research idea,accepted,Ion,1
-Musical Therapy,conservatoire students are helping us,proposed,Ana,2
+Musical Therapy,conservatoire students are helping us,accepted,Ana,2
 Language AI,we are training an ambitious AI model,accepted,Mia,1
-CTP Cluj App Renewal,research the bus routes,proposed,Matei,2
+CTP Cluj App Renewal,research the bus routes,accepted,Matei,2

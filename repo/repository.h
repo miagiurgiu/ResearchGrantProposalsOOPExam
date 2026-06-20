@@ -22,6 +22,7 @@ public:
     void loadResearchers();
     void save();
     void addIdea(const Idea& idea);
+    void acceptIdea(const std::string& title);
 };
 
 

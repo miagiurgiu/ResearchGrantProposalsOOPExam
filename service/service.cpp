@@ -32,3 +32,10 @@ void Service::addIdea(const std::string &title, const std::string &description, 
     Idea newIdea{title,description,status,creator,duration};
     repo.addIdea(newIdea);
 }
+
+void Service::acceptIdea(const std::string &title, const Researcher &researcher) {
+    if (researcher.getPosition()!="senior")
+        throw std::runtime_error("only seniors can revise and accept");
+    repo.acceptIdea(title);
+    notify(); //OBSERVER
+}

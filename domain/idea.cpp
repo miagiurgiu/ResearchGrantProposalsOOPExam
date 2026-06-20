@@ -35,3 +35,7 @@ std::string Idea::toString() const {
 std::string Idea::toStringNoDescription() const {
     return title+","+status+","+creator+","+std::to_string(duration);
 }
+
+void Idea::setStatus(const std::string &newStatus) {
+    this->status=newStatus;
+}

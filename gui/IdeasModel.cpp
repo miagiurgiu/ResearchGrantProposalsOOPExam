@@ -48,3 +48,7 @@ void IdeasModel::updateData(const std::vector<Idea>& newIdeas) {
     ideas = newIdeas;
     endResetModel();
 }
+
+Qt::ItemFlags IdeasModel::flags(const QModelIndex& index) const {
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+}

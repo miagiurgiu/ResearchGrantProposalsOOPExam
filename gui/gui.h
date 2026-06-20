@@ -14,13 +14,13 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class GUI; }
 QT_END_NAMESPACE
 
-class GUI : public QWidget {
+class GUI : public QWidget,public Observer {
 Q_OBJECT
 
 public:
     explicit GUI(Service& service,const Researcher& researcher,QWidget *parent = nullptr);
     ~GUI() override;
-
+    void update() override;
 
 private:
     Ui::GUI *ui;
@@ -30,7 +30,7 @@ private:
     void connectSignalsAndSlots();
     void populateList();
     void addIdea();
-    void update();
+    void acceptIdea();
 };
 
 

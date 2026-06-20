@@ -13,6 +13,8 @@
 GUI::GUI(Service& service,const Researcher& researcher,QWidget *parent) :
     QWidget(parent), ui(new Ui::GUI),service{service},researcher{researcher} {
     ui->setupUi(this);
+    service.registerObserver(this);
+    ui->ideasTableView->setSelectionBehavior(QAbstractItemView::SelectRows); // HINT(*)
     this->setWindowTitle(QString::fromStdString(researcher.getName()));
     ui->positionLabel->setText(QString::fromStdString(researcher.getPosition()));
     // MODEL
@@ -22,11 +24,13 @@ GUI::GUI(Service& service,const Researcher& researcher,QWidget *parent) :
 }
 
 GUI::~GUI() {
+    service.unregisterObserver(this);
     delete ui;
 }
 
 void GUI::connectSignalsAndSlots() {
     connect(ui->addButton,&QPushButton::clicked,this,&GUI::addIdea);
+    connect(ui->acceptButton,&QPushButton::clicked,this,&GUI::acceptIdea);
 }
 
 void GUI::populateList() {
@@ -51,4 +55,20 @@ void GUI::addIdea() {
 
 void GUI::update() {
     model->updateData(service.getSortedIdeas());
+}
+
+void GUI::acceptIdea() {
+    auto indexes=ui->ideasTableView->selectionModel()->selectedIndexes();
+    if (indexes.empty())
+        return;
+    int row=indexes[0].row();
+    auto ideas=service.getSortedIdeas();
+    Idea selectedIdea=ideas[row];
+    try {
+        service.acceptIdea(selectedIdea.getTitle(),researcher);
+        update();
+    }
+    catch (const std::exception& e) {
+        QMessageBox::critical(this,"ERROR",e.what());
+    }
 }
